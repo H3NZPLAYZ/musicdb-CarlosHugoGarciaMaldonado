@@ -1,0 +1,55 @@
+{% extends "base.twig" %}
+{% block main %}
+        <div class="container mt-4">
+            <div class="row text-center d-flex justify-content-center">
+                <div class="col-4 mb-3">
+                    <form method="POST" action="\manage\new">
+                        <label>Name</label>
+                        <input type="text"
+                               class="form-control mb-3"
+                               name="name"
+                               autocomplete="off"
+                               value="Alberto"
+                               required>
+
+                        <label>eMail</label>
+                        <input type="text"
+                               class="form-control mb-3"
+                               name="email"
+                               autocomplete="off"
+                               value="alberto@gmail.com"
+                               required>
+
+                        <label>Password</label>
+                        <input type="password"
+                               class="form-control mb-3"
+                               name="password"
+                               autocomplete="off"
+                               value="dejameya"
+                               required>
+
+                        <button type="submit" class="btn btn-success mt-3 w-100">Create Admin</button>
+
+
+                    {% if error %}
+                        <div class="alert alert-danger mt-2">
+                            {% if errorMsg == 'credentials' %}
+                                Email or password incorrect
+                            {% elseif errorMsg == 'duplicate_email' %}
+                                Email already exists
+                            {% else %}
+                                An error occurred
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {% if success %}
+                        <div class="alert alert-success mt-2">
+                            Registration successful! Please log in.
+                        </div>
+                    {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}

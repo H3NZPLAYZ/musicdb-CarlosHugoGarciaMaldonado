@@ -1,0 +1,52 @@
+{% extends "base.twig" %}
+{% block main %}
+    {% if albumCount == 0 %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-danger"> Warning! </h1>
+            <p> Before making a song you need an album created at least.</p>
+            <a href="{{ route('newalbum') }}">Make an album here</a>
+        </div>
+    {% else %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-center"> --- {{ userName }}'s new Song --- </h1>
+            <form class="w-50" method="POST" action="\song\new">
+
+                <label>Name</label>
+                <input type="text" class="form-control mb-3"
+                       name="songName"
+                       value="New Song"
+                       placeholder="Song\'s name"
+                       required>
+
+                <label>Album</label>
+                <select class="form-control mb-3" name="songAlbum" required>
+                    <option value="">-- Select Album --</option>';
+
+                    {% for album in getAlbumsByUserId(userId) %}
+                        <option value="{{ album.id }}">{{ album.name }}</option>;
+                    {% endfor %}
+                </select>
+
+                <label>Song duration</label>
+                <div class="d-flex justify-content-center align-items-center">
+                    <p>Minutes</p>
+                    <p class="me-2 ms-2"> </p>
+                    <p>Seconds</p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <input type="number" class="form-control mb-3 text-center"
+                           name="songMinutes"
+                           min="0" max="59" value="0" required>
+
+                    <p class="me-2 ms-2">:</p>
+
+                    <input type="number" class="form-control mb-3 text-center"
+                           name="songSeconds"
+                           min="0" max="59" value="0" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Create</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.twig" %}
+{% block main %}
+    {% if data is empty %}
+        <div class="container mt-4">
+            <div class="row text-center">
+                <div class="col mb-3">
+                    <h1> --- {{ userName }}'s Albums --- </h1>
+                    <p class='mt-4'>There are no albums yet</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container mt-4">
+            <div class="row text-center">
+                <div class="col mb-3">
+                    <h1> --- {{ userName }}'s Albums --- </h1>
+                    {% for album in data %}
+                        {{ album.albumFormatShow() }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

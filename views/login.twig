@@ -1,0 +1,56 @@
+{% extends "base.twig" %}
+{% block main %}
+    {% if username == null %}
+        <div class="container mt-4">
+            <div class="row text-center d-flex justify-content-center">
+                <div class="col-4 mb-3">
+                    <form method="POST" action="\login">
+                        <label>eMail</label>
+                        <input type="text"
+                               class="form-control mb-3"
+                               name="email"
+                               autocomplete="off"
+                               value="alberto@gmail.com"
+                               required>
+
+                        <label>Password</label>
+                        <input type="password"
+                               class="form-control mb-3"
+                               name="password"
+                               autocomplete="off"
+                               value="dejameya"
+                               required>
+
+                        <button type="submit" class="btn btn-success mt-3 w-100">Log in</button>
+
+                        {% if error %}
+                            <div class="alert alert-danger mt-2">
+                                {% if errorMsg == 'missing_fields' %}
+                                    Email or password empty
+                                {% elseif errorMsg == 'incorrect_password' %}
+                                    Incorrect email or password
+                                {% elseif errorMsg == 'add_without_login' %}
+                                    You must be logged to add songs to lists
+                                {% else %}
+                                    An error occurred
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if success %}
+                            <div class="alert alert-success mt-2">
+                                Log in successful! Please go to the Home section.
+                            </div>
+                        {% endif %}
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {{ route('home') }}
+    {% endif %}
+{% endblock %}

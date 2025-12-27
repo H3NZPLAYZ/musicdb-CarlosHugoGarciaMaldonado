@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+{% block main %}
+    {% if lists is empty %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-danger"> Warning! </h1>
+            <p> Before adding a song to a list, you need a list where the song is not already included.</p>
+            <a href="{{ route('newlist') }}">Make a list here</a>
+        </div>
+    {% else %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1> --- Lists to add --- </h1>
+            <h3> Adding {{ songName }} to ...</h3>
+            {% for list in lists %}
+                {{ list.listFormatAdd() }}
+            {% endfor %}
+            <a href="{{ route('songs') }}">Check other songs</a>
+        </div>
+    {% endif %}
+{% endblock %}

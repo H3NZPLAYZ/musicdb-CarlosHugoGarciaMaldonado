@@ -1,0 +1,38 @@
+{% extends "base.twig" %}
+{% block main %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-center"> --- {{ userName }}'s new List --- </h1>
+                <form class="w-50" method="POST" action="/list/new">
+                    <label>Name</label>
+                    <input type="text" class="form-control mb-3"
+                           name="listName"
+                           autocomplete="off"
+                           autofocus
+
+                           placeholder="List's name"
+                           >
+
+                    <label>List Cover</label>
+                    <input type="text" class="form-control mb-3"
+                           name="listPicture_url"
+                           autocomplete="off"
+                           placeholder="Picture URL"
+                           >
+
+                    <label>Description</label>
+                    <textarea id="listDescription" name="listDescription" class="form-control mb-3" rows="5" placeholder="Enter text here..."></textarea>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="public" id="public" value="1">
+                        <label class="form-check-label" for="public">Public</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3 w-100">Create</button>
+                </form>
+            {% if success %}
+                <div class="alert alert-success mt-2">
+                    New list added successfully!
+                </div>
+            {% endif %}
+        </div>
+{% endblock %}

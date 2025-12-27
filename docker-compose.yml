@@ -1,0 +1,25 @@
+# Desarrollo web en Entorno Servidor
+
+services:
+  #
+  # servicio WEB
+  web:
+    container_name: dwes-web
+    image: php:8.4-apache
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  #
+  # servicio de Bases de Datos
+  db:
+    container_name: dwes-db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: prueba
+    ports:
+      - "3305:3306"

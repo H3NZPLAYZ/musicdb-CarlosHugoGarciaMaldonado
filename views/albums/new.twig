@@ -1,0 +1,47 @@
+{% extends "base.twig" %}
+{% block main %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-center"> --- {{ userName }}'s new Album --- </h1>
+            <form class="w-50" method="POST" action="\album\new">
+
+                <label>Name</label>
+                <input type="text" class="form-control mb-3"
+                       name="albumName"
+
+                       placeholder="New album X"
+                       >
+
+                <label>Album Cover</label>
+                <input type="text" class="form-control mb-3"
+                       name="albumPicture_url"
+                       placeholder="Picture URL">
+
+                <label>Description</label>
+                <textarea name="albumDescription" class="form-control mb-3" rows="5" placeholder="Enter text here..."></textarea>
+
+                <label>Release Year</label>
+                <input type="number" class="form-control mb-3"
+                       name="albumYear"
+
+                       max="{{ year }}"
+                       value="{{ year }}">
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Create</button>
+            </form>
+            {% if error %}
+                <div class="alert alert-danger mt-2">
+                    {% if errorMsg == 'duplicate_album' %}
+                        Album name already used.
+                    {% else %}
+                        An error occurred
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if success %}
+                <div class="alert alert-success mt-2">
+                    New album added successfully!
+                </div>
+            {% endif %}
+        </div>
+{% endblock %}
