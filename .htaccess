@@ -12,17 +12,25 @@ RewriteRule ^list/all$          index.php?model=list&method=all                 
 RewriteRule ^list/new$          index.php?model=list&method=new                 [QSA,L]
 RewriteRule ^list/mylists$      index.php?model=list&method=my                  [QSA,L]
 RewriteRule ^list/show$         index.php?model=list&method=show                [QSA,L]
+RewriteRule ^list/del$         index.php?model=list&method=del                [QSA,L]
+
 
 
 RewriteRule ^album/all$         index.php?model=album&method=all                [QSA,L]
 RewriteRule ^album/new$         index.php?model=album&method=new                [QSA,L]
 RewriteRule ^album/myalbums$    index.php?model=album&method=my               [QSA,L]
 RewriteRule ^album/show$         index.php?model=album&method=show                [QSA,L]
+RewriteRule ^album/del$         index.php?model=album&method=del                [QSA,L]
+RewriteRule ^album/edit$         index.php?model=album&method=edit                [QSA,L]
+
+
 
 RewriteRule ^song/all$          index.php?model=song&method=all                 [QSA,L]
 RewriteRule ^song/new$          index.php?model=song&method=new                 [QSA,L]
 RewriteRule ^song/mysongs$      index.php?model=song&method=my                  [QSA,L]
 RewriteRule ^song/add$          index.php?model=song&method=add                 [QSA,L]
+RewriteRule ^song/del$          index.php?model=song&method=del                 [QSA,L]
+RewriteRule ^song/edit$          index.php?model=song&method=edit                 [QSA,L]
 
 RewriteRule ^artist$            index.php?model=artist&method=all               [QSA,L]
 
