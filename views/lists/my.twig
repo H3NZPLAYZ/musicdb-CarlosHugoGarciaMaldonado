@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 {% block main %}
-    {% if data is empty %}
+    {% if data is empty and not liked %}
         <div class="container mt-4">
             <div class="row text-center">
                 <div class="col mb-3">
@@ -14,8 +14,9 @@
             <div class="row text-center">
                 <div class="col mb-3">
                     <h1> --- {{ userName }}'s Lists --- </h1>
+                    {{ liked.listFormatShow() }}
                     {% for list in data %}
-                        {{ list.listFormatShow() }}
+                        {{ list.listFormatShowDel() }}
                     {% endfor %}
                 </div>
             </div>

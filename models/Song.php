@@ -105,6 +105,27 @@ class Song
                 </div>
         ';
     }
+    public function songFormatEditDelete() : void
+    {
+        $album = Album::getAlbumById($this->getAlbumId());
+
+        echo '
+                <div class="row align-items-center myCard w-50 mx-auto">
+                    <div class="col-2 text-center">
+                        <img class="w-100" src="'.$album->getPictureUrl().'" alt="'.$album->getName().' cover">
+                    </div>
+                    <div class="col-8 text-center">
+                        <h1><strong>'.$this->getName().'</strong></h1>
+                        <p><strong>Artist:</strong> '.$album->getAlbumArtistName().' <strong>Album:</strong> '.$album->getName().'</p>
+                        <p><strong>Duration:</strong> '.$this->getFormattedDuration().'</p>
+                    </div>
+                    <div class="col-2 text-center">
+                        <a class="btn btn-dark ms-auto mb-2" href="/song/edit?idSong='.$this->getId().'">✏️</a>
+                        <a class="btn btn-dark ms-auto mb-2" href="/song/del?idSong='.$this->getId().'">🗑️</a>
+                    </div>
+                </div>
+        ';
+    }
 
     public static function create()
     {
@@ -117,6 +138,34 @@ class Song
             "album_id" => Session::get("songAlbum"),
             "name" => Session::get("songName"),
             "duration" => Session::get("songDuration")
+        ]);
+    }
+
+    public static function update()
+    {
+        $pdo = Database::connect() ;
+        $stmt = $pdo->prepare("UPDATE songs
+                                        SET album_id = :album_id,
+                                            name = :name, 
+                                            duration = :duration
+                                        WHERE song_id = :song_id"
+        );
+
+        $stmt->execute([
+            "album_id" => Session::get("songAlbum"),
+            "name" => Session::get("songName"),
+            "duration" => Session::get("songDuration"),
+            "song_id" => Session::get("songId")
+        ]);
+    }
+
+    public static function del(int $songId)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("DELETE FROM songs WHERE song_id = :songId");
+
+        $stmt->execute([
+            ":songId" => $songId
         ]);
     }
 }

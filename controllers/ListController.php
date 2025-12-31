@@ -95,10 +95,13 @@ class ListController extends BaseController
 
         $data = $stmt->fetchAll(PDO::FETCH_CLASS, Lists::class);
 
+        $liked = array_shift($data);
+
         Session::set("last_action","My Lists");
 
         $this->render("lists/my.twig", [
             "last_action"=>Session::get("last_action"),
+            "liked"=>$liked,
             "data" => $data
         ]);
     }
@@ -127,5 +130,22 @@ class ListController extends BaseController
         ]);
     }
 
+    public function del()
+    {
+        if (Session::get("userRole") != "user")
+        {
+            Request::redirectToRoute("home");
+        }
 
+        $idList = $_POST['idList'] ?? $_GET['idList'] ?? Session::get('idList') ?? null;
+        $idList = (int) $idList;
+
+        if (!$idList) {
+            Request::redirectToRoute("mylists");
+        }
+
+        Lists::del($idList);
+
+        Request::redirectToRoute("mylists");
+    }
 }

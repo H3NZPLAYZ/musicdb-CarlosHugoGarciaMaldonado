@@ -15,7 +15,7 @@
                 <div class="col mb-3">
                     <h1> --- {{ userName }}'s Albums --- </h1>
                     {% for album in data %}
-                        {{ album.albumFormatShow() }}
+                        {{ album.albumFormatShowEditDelete() }}
                     {% endfor %}
                 </div>
             </div>

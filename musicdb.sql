@@ -13,7 +13,7 @@ CREATE TABLE users (
 CREATE TABLE albums (
     album_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
     picture_url VARCHAR(255),
     description TEXT,
     year YEAR,

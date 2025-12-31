@@ -79,6 +79,15 @@ class Lists
         self::create($user_id, self::PERMANENT_LISTS_NAMES[0], self::LIKED_COVER, self::LIKED_DESC,0);
     }
 
+    public static function del(int $listId)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("DELETE FROM lists WHERE list_id = :listId");
+
+        $stmt->execute([
+            ":listId" => $listId
+        ]);
+    }
     public function getListSongAmount() : int
     {
         $pdo = Database::connect();
@@ -221,6 +230,28 @@ class Lists
                 </div>
                 <div class="col-2 text-center">
                     <a class="btn btn-dark ms-auto" href="/list/show?idList='.$this->getListId().'">👁️</a>                    
+                </div>
+            </div>
+        ';
+    }
+
+    public function listFormatShowDel() : void
+    {
+        echo '
+            <div class="row align-items-center myCard w-50 mx-auto">
+                <div class="col-4 text-center">
+                    <img class="w-100" src="'.$this->getPictureUrl().'" alt="'.$this->getName().' list image">
+                </div>
+                <div class="col-6 text-center">
+                    <h1><strong>'.$this->getName().'</strong></h1>
+                    <p><strong>Owner:</strong> '.$this->getOwnerName().'</p>                    
+                    <p><strong>Privacity:</strong> '.($this->getPublic()?"Public":"Private").'</p>
+                    <p><strong>Songs:</strong> '.$this->getListSongAmount().'</p>
+                    <p><strong>Description:</strong> '.$this->getDescription().'</p>
+                </div>
+                <div class="col-2 text-center">
+                    <a class="btn btn-dark ms-auto mb-2" href="/list/show?idList='.$this->getListId().'">👁️</a>
+                    <a class="btn btn-dark ms-auto mb-2" href="/list/del?idList='.$this->getListId().'">🗑️️</a>                                        
                 </div>
             </div>
         ';

@@ -1,0 +1,34 @@
+{% extends "base.twig" %}
+{% block main %}
+        <div class="col-6 d-flex flex-column align-items-center">
+            <h1 class="text-center"> --- Editing {{ album.getName() }} --- </h1>
+            <form class="w-50" method="POST" action="\album\edit">
+
+                <label>Name</label>
+                <input type="text" class="form-control mb-3"
+                       name="albumName"
+                       value="{{ album.getName() }}"
+                       placeholder="New album X"
+                       >
+
+                <label>Album Cover</label>
+                <input type="text" class="form-control mb-3"
+                       name="albumPicture_url"
+                       placeholder="Picture URL"
+                       value="{{ album.getPictureUrl() }}"
+                       >
+
+                <label>Description</label>
+                <textarea name="albumDescription" class="form-control mb-3" rows="5" placeholder="Enter text here..."></textarea>
+
+                <label>Release Year</label>
+                <input type="number" class="form-control mb-3"
+                       name="albumYear"
+
+                       max="{{ year }}"
+                       value="{{ album.getYear }}">
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Edit</button>
+            </form>
+        </div>
+{% endblock %}

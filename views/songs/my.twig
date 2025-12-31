@@ -15,7 +15,7 @@
                 <div class="col mb-3">
                     <h1> --- {{ userName }}'s Songs --- </h1>
                     {% for song in data %}
-                        {{ song.songFormat() }}
+                        {{ song.songFormatEditDelete() }}
                     {% endfor %}
                 </div>
             </div>

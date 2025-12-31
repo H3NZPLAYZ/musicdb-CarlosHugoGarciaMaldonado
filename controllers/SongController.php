@@ -147,4 +147,66 @@ class SongController extends BaseController
             "lists" => $lists
         ]);
     }
+
+    public function del()
+    {
+        if (Session::get("userRole") != "artist")
+        {
+            Request::redirectToRoute("home");
+        }
+
+        $idSong = $_POST['idSong'] ?? $_GET['idSong'] ?? Session::get('idSong') ?? null;
+        $idSong = (int) $idSong;
+
+        if (!$idSong) {
+            Request::redirectToRoute("mysongs");
+        }
+
+        Song::del($idSong);
+
+        Request::redirectToRoute("mysongs");
+    }
+
+    public function edit()
+    {
+        if (Session::get("userRole") != "artist")
+        {
+            Request::redirectToRoute("home");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            Session::set('songName', $_POST['songName'] ?? null);
+            Session::set('songAlbum', $_POST['songAlbum'] ?? null);
+            Session::set('songMinutes', $_POST['songMinutes'] ?? null);
+            Session::set('songSeconds', $_POST['songSeconds'] ?? null);
+
+            $name = Session::get("songName");
+            $album = Session::get("songAlbum");
+            $minutes = Session::get("songMinutes");
+            $seconds = Session::get("songSeconds");
+
+            Session::set('songDuration',$minutes * 60 + $seconds ?? null);
+
+            Song::update();
+
+            Session::set("last_action","Song Update");
+
+            Request::redirectToRoute("mysongs");
+        }
+
+        $idSong = $_POST['idSong'] ?? $_GET['idSong'] ?? Session::get('idSong') ?? null;
+        $idSong = (int) $idSong;
+
+        if (!$idSong) {
+            Request::redirectToRoute("mysongs");
+        }
+
+        $song = Song::getSongById($idSong);
+        Session::set('songId', $idSong);
+
+        $this->render("songs/edit.twig", [
+            "song" => $song,
+        ]);
+    }
 }

@@ -118,5 +118,60 @@ class AlbumController extends BaseController
         ]);
     }
 
+    public function del()
+    {
+        if (Session::get("userRole") != "artist")
+        {
+            Request::redirectToRoute("home");
+        }
+
+        $idAlbum = $_POST['idAlbum'] ?? $_GET['idAlbum'] ?? Session::get('idAlbum') ?? null;
+        $idAlbum = (int) $idAlbum;
+
+        if (!$idAlbum) {
+            Request::redirectToRoute("myalbums");
+        }
+
+        Album::del($idAlbum);
+
+        Request::redirectToRoute("myalbums");
+    }
+
+    public function edit()
+    {
+        if (Session::get("userRole") != "artist")
+        {
+            Request::redirectToRoute("home");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            Session::set('albumName', $_POST['albumName'] ?? null);
+            Session::set('albumPicture_url', $_POST['albumPicture_url'] ?? null);
+            Session::set('albumDescription', $_POST['albumDescription'] ?? null);
+            Session::set('albumYear', $_POST['albumYear'] ?? null);
+
+            Album::update();
+
+            Session::set("last_action","Album Update");
+
+            Request::redirectToRoute("myalbums");
+        }
+
+        $idAlbum = $_POST['idAlbum'] ?? $_GET['idAlbum'] ?? Session::get('idAlbum') ?? null;
+        $idAlbum = (int) $idAlbum;
+
+        if (!$idAlbum) {
+            Request::redirectToRoute("myalbums");
+        }
+
+        $album = Album::getAlbumById($idAlbum);
+        Session::set('albumId', $idAlbum);
+
+        $this->render("albums/edit.twig", [
+            "album" => $album,
+        ]);
+    }
+
 
 }

@@ -105,6 +105,37 @@ class Album
         }
     }
 
+    public static function del(int $albumId)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("DELETE FROM albums WHERE album_id = :albumId");
+
+        $stmt->execute([
+            ":albumId" => $albumId
+        ]);
+    }
+
+    public static function update()
+    {
+        $pdo = Database::connect() ;
+        $stmt = $pdo->prepare("UPDATE albums
+                                        SET user_id = :user_id,
+                                            name = :name, 
+                                            picture_url = :picture_url,
+                                            description = :description,
+                                            year = :year
+                                        WHERE album_id = :album_id"
+        );
+
+        $stmt->execute([
+            "user_id" => Session::get("userId"),
+            "name" => Session::get("albumName"),
+            "picture_url" => Session::get("albumPicture_url"),
+            "description" => Session::get("albumDescription"),
+            "year" => Session::get("albumYear"),
+            "album_id" => Session::get("albumId")
+        ]);
+    }
 
     public static function getAlbumAmountById(int $user_id) : int
     {
@@ -230,6 +261,30 @@ class Album
                 </div>
                 <div class="col-2 text-center">
                     <a class="btn btn-dark ms-auto" href="/album/show?idAlbum='.$this->getId().'">👁️</a>
+                </div>
+            </div>
+        ';
+    }
+
+    public function albumFormatShowEditDelete() : void
+    {
+        echo '
+            <div class="row align-items-center myCard w-50 mx-auto">
+                <div class="col-3 text-center">
+                    <img class="w-100" src="'.$this->getPictureUrl().'" alt="'.$this->getName().' cover">
+                </div>
+                <div class="col-7 text-center">
+                    <h1><strong>'.$this->getName().'</strong></h1>
+                    <p><strong>Artist:</strong> '.$this->getAlbumArtistName().
+            ' <strong>Album:</strong> '.$this->getName().'</p>
+                    <p><strong>Year:</strong> '.$this->getYear().
+            ' <strong>Songs:</strong> '.$this->getAlbumSongAmount().'</p>
+                    <p><strong>Description:</strong> '.$this->getDescription().'</p>
+                </div>
+                <div class="col-2 text-center">
+                    <a class="btn btn-dark ms-auto mb-2" href="/album/show?idAlbum='.$this->getId().'">👁️</a>
+                    <a class="btn btn-dark ms-auto mb-2" href="/album/edit?idAlbum='.$this->getId().'">✏️️</a>
+                    <a class="btn btn-dark ms-auto mb-2" href="/album/del?idAlbum='.$this->getId().'">🗑️</a>
                 </div>
             </div>
         ';

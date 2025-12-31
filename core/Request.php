@@ -19,11 +19,13 @@ final class Request
         "myalbums" => "album/myalbums",
         "newalbum" => "album/new",
         "showalbum" => "album/show",
+        "editalbum" => "album/edit",
 
         "songs" => "song/all",
         "mysongs" => "song/mysongs",
         "newsong" => "song/new",
         "addsong" => "song/add",
+        "editsong" => "song/edit",
 
         "artists" => "artist",
 
@@ -57,7 +59,8 @@ final class Request
 
     public static function redirectToRoute(string $name)
     {
-        self::route($name) |> self::redirect(...);
-        exit();
+        $route = self::route($name);
+        self::redirect($route);
+        //exit();
     }
 }
